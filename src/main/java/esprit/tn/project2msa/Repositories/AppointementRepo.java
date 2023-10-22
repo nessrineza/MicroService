@@ -13,4 +13,6 @@ import java.util.List;
 @Repository
 public interface AppointementRepo extends JpaRepository<appointement, Integer> {
 
+    List<appointement> findAllByIdAnnonce(Integer idAnnonce);
+
 }

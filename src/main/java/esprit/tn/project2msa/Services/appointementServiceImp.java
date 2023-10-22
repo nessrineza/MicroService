@@ -1,8 +1,8 @@
 package esprit.tn.project2msa.Services;
 
 import esprit.tn.project2msa.Repositories.AppointementRepo;
-import esprit.tn.project2msa.entites.AppointmentStatus;
 import esprit.tn.project2msa.entites.appointement;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class appointementServiceImp  implements appointementService{
     @Autowired
     AppointementRepo appointementRepository;
@@ -26,8 +27,9 @@ public class appointementServiceImp  implements appointementService{
     }
 
     @Override
-    public void removeAppointement(Integer idApp) {
+    public boolean removeAppointement(Integer idApp) {
         appointementRepository.deleteById(idApp);
+        return false;
     }
 
     @Override
@@ -40,5 +42,9 @@ public class appointementServiceImp  implements appointementService{
     @Override
     public appointement retrieveAppointementbyId(Integer idApp) {
         return  appointementRepository.findById(idApp).orElse(null);
+    }
+
+    public List<appointement> findAllAppointementsByAnnonce(Integer idAnnonce) {
+        return  appointementRepository.findAllByIdAnnonce(idAnnonce);
     }
 }

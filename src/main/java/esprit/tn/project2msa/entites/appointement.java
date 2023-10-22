@@ -1,7 +1,6 @@
 package esprit.tn.project2msa.entites;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +10,9 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class appointement {
 
 
@@ -31,5 +33,7 @@ public class appointement {
     @Column(name = "appointment_status")
     @Enumerated(EnumType.STRING)
     private AppointmentStatus appointmentStatus;
+    @Column(name = "id_annonce")
+    private Integer idAnnonce;
 }
 
