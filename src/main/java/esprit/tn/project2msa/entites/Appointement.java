@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class appointement {
+public class Appointement {
 
 
     @Id
@@ -32,8 +32,10 @@ public class appointement {
 
     @Column(name = "appointment_status")
     @Enumerated(EnumType.STRING)
-    private AppointmentStatus appointmentStatus;
-    @Column(name = "id_annonce")
-    private Integer idAnnonce;
+    private AppointementStatus appointmentStatus;
+//    @Column(name = "id_annonce")
+//    private Integer idAnnonce;
+
+    private Integer annonceId;
 }
 

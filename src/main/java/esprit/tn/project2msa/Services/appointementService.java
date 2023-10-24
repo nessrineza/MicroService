@@ -1,14 +1,15 @@
 package esprit.tn.project2msa.Services;
 
-import esprit.tn.project2msa.entites.appointement;
+import esprit.tn.project2msa.entites.Appointement;
 
 import java.util.List;
 
 public interface appointementService {
-    public void AjouterAppointement(appointement appointment);
-    public appointement UpdateAppointement( appointement appointment, Integer id);
+    public void AjouterAppointement(Appointement appointment);
+    public Appointement UpdateAppointement(Appointement appointment, Integer id);
     public boolean removeAppointement(Integer idApp);
-    public List<appointement> retrieveAllAppointement();
-    public appointement retrieveAppointementbyId(Integer idApp);
-    List<appointement> findAllAppointementsByAnnonce(Integer IdAnnonce);
+    public List<Appointement> retrieveAllAppointement();
+    public Appointement retrieveAppointementbyId(Integer idApp);
+    //List<Appointement> findAllByAnnonce(Integer IdAnnonce);
+    public List<Appointement> findAllAppointementsByAnnonce(Integer id );
 }

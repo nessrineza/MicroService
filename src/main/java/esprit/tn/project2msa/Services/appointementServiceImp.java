@@ -1,7 +1,7 @@
 package esprit.tn.project2msa.Services;
 
 import esprit.tn.project2msa.Repositories.AppointementRepo;
-import esprit.tn.project2msa.entites.appointement;
+import esprit.tn.project2msa.entites.Appointement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,17 +11,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class appointementServiceImp  implements appointementService{
+public class appointementServiceImp  implements appointementService {
     @Autowired
     AppointementRepo appointementRepository;
+
     @Override
-    public void AjouterAppointement(appointement appointment) {
-       // this.appointementRepository = appointementRepository;
-       appointementRepository.save(appointment);
+    public void AjouterAppointement(Appointement appointment) {
+        // this.appointementRepository = appointementRepository;
+        appointementRepository.save(appointment);
     }
 
     @Override
-    public appointement UpdateAppointement(appointement appointment, Integer id) {
+    public Appointement UpdateAppointement(Appointement appointment, Integer id) {
         appointment.setId(id);
         return appointementRepository.save(appointment);
     }
@@ -33,18 +34,22 @@ public class appointementServiceImp  implements appointementService{
     }
 
     @Override
-    public List<appointement> retrieveAllAppointement() {
-        List<appointement> appointments = new ArrayList<>();
+    public List<Appointement> retrieveAllAppointement() {
+        List<Appointement> appointments = new ArrayList<>();
         appointementRepository.findAll().forEach(appointments::add);
         return appointments;
     }
 
     @Override
-    public appointement retrieveAppointementbyId(Integer idApp) {
-        return  appointementRepository.findById(idApp).orElse(null);
+    public Appointement retrieveAppointementbyId(Integer idApp) {
+        return appointementRepository.findById(idApp).orElse(null);
     }
 
-    public List<appointement> findAllAppointementsByAnnonce(Integer idAnnonce) {
-        return  appointementRepository.findAllByIdAnnonce(idAnnonce);
+
+    @Override
+
+    public List<Appointement> findAllAppointementsByAnnonce(Integer id) {
+
+        return appointementRepository.findAllByAnnonceId(id);
     }
 }

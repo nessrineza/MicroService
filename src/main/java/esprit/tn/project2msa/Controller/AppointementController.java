@@ -1,7 +1,6 @@
 package esprit.tn.project2msa.Controller;
 
-import esprit.tn.project2msa.Services.appointementServiceImp;
-import esprit.tn.project2msa.entites.appointement;
+import esprit.tn.project2msa.entites.Appointement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ public class AppointementController {
     @Autowired
     esprit.tn.project2msa.Services.appointementServiceImp appointementServiceImp;
     @PostMapping("/Add")
-    public ResponseEntity<Void> addAppointment(@RequestBody appointement appointment) {
+    public ResponseEntity<Void> addAppointment(@RequestBody Appointement appointment) {
         // Appel de votre service pour ajouter un rendez-vous
         this.appointementServiceImp.AjouterAppointement(appointment);
 
@@ -28,9 +27,9 @@ public class AppointementController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED); // Exemple de code de statut 201 (Created)
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<appointement> updateAppointment(@RequestBody appointement appointment, @PathVariable("id") Integer id) {
+    public ResponseEntity<Appointement> updateAppointment(@RequestBody Appointement appointment, @PathVariable("id") Integer id) {
         // Appel de votre service pour mettre à jour un rendez-vous
-        appointement updatedAppointment = this.appointementServiceImp.UpdateAppointement(appointment, id);
+        Appointement updatedAppointment = this.appointementServiceImp.UpdateAppointement(appointment, id);
 
         if (updatedAppointment != null) {
             // Si la mise à jour a réussi, retournez un ResponseEntity avec le rendez-vous mis à jour et le code 200 (OK).
@@ -55,8 +54,8 @@ public class AppointementController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<appointement>> retrieveAllAppointments() {
-        List<appointement> appointments = appointementServiceImp.retrieveAllAppointement();
+    public ResponseEntity<List<Appointement>> retrieveAllAppointments() {
+        List<Appointement> appointments = appointementServiceImp.retrieveAllAppointement();
 
         if (!appointments.isEmpty()) {
             // Si la liste d'annonces n'est pas vide, renvoyez un ResponseEntity avec les annonces et le code 200 (OK).
@@ -67,12 +66,12 @@ public class AppointementController {
         }
     }
     @GetMapping("/Annonce/{annonce-id}")
-    public ResponseEntity<List<appointement>> retrieveAllAppointments(@PathVariable("annonce-id") Integer IdAnnonce) {
+    public ResponseEntity<List<Appointement>> retrieveAllAppointments(@PathVariable("annonce-id") Integer IdAnnonce) {
         return  ResponseEntity.ok(appointementServiceImp.findAllAppointementsByAnnonce(IdAnnonce));
     }
     @GetMapping("/get/{id}")
-    public ResponseEntity<appointement> getAppointment(@PathVariable("id") Integer idApp) {
-        appointement appointment = appointementServiceImp.retrieveAppointementbyId(idApp);
+    public ResponseEntity<Appointement> getAppointment(@PathVariable("id") Integer idApp) {
+        Appointement appointment = appointementServiceImp.retrieveAppointementbyId(idApp);
 
         if (appointment != null) {
             // Si l'annonce a été trouvée, renvoyez un ResponseEntity avec l'annonce et le code 200 (OK).
