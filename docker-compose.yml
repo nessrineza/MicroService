@@ -1,0 +1,72 @@
+version: '3.3'
+services:
+  server-registry:
+    image: server-registry-0.0.1-snapshot
+    container_name: server-registry-container
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-network
+
+  gateway:
+    build:
+      context: ./geteway
+      dockerfile: Dockerfile
+    image: gateway-0.0.1-snapshot
+    container_name: gateway
+    ports:
+      - "8099:8099"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://server-registry:8761/eureka/
+    depends_on:
+      - server-registry
+    networks:
+      - spring-network
+
+  stockmsa:
+    build:
+      context: ./StockMSA
+      dockerfile: Dockerfile
+    container_name: stockmsa
+    ports:
+      - "8075:8099"
+    depends_on:
+      - server-registry
+      - db-mysql
+      - gateway
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - spring-network
+
+  forum:
+    build:
+      context: ./Forum  # Specify the path to the directory containing your Dockerfile
+      dockerfile: Dockerfile  # The name of your Dockerfile (if not named 'Dockerfile')
+    container_name: forum
+    ports:
+      - "8077:8099"  # Map the internal service port to a host port
+    depends_on:
+      - server-registry
+      - db-mysql
+      - gateway  # Corrected the service name to 'gateway'
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  db-mysql:  # Define the MySQL service
+    image: mysql:8.0
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+networks:
+  spring-network:
